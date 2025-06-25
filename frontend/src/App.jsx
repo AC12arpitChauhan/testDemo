@@ -1,3 +1,4 @@
+// 📁 frontend/src/App.jsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -33,49 +34,67 @@ export default function App() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <form onSubmit={handleSubmit} className="mb-4">
-        <input
-          value={longUrl}
-          onChange={(e) => setLongUrl(e.target.value)}
-          placeholder="Enter long URL"
-          className="border p-2 w-full"
-        />
-        <button className="mt-2 bg-blue-500 text-white px-4 py-2">Shorten</button>
-      </form>
+    <div className="min-h-screen bg-gray-900 text-white p-6 font-sans">
+      <div className="max-w-4xl mx-auto rounded-2xl shadow-lg bg-gray-800 p-6">
+        <h1 className="text-3xl font-bold mb-6 text-center">URL Shortener 🔗</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            value={longUrl}
+            onChange={(e) => setLongUrl(e.target.value)}
+            placeholder="Enter long URL..."
+            className="p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button className="bg-blue-600 hover:bg-blue-500 transition text-white font-semibold px-4 py-2 rounded-xl">
+            Shorten URL
+          </button>
+        </form>
 
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border">Long URL</th>
-            <th className="p-2 border">Short URL</th>
-            <th className="p-2 border">Clicks</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {urls.map(({ id, long_url, short_id, click_count }) => (
-            <tr key={id}>
-              <td className="p-2 border">{long_url}</td>
-              <td className="p-2 border">
-                <a
-                  href={`http://localhost:5001/${short_id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  {short_id}
-                </a>
-              </td>
-              <td className="p-2 border text-center">{click_count}</td>
-              <td className="p-2 border space-x-2">
-                <button onClick={() => handleEdit(id, long_url)} className="text-yellow-600">Edit</button>
-                <button onClick={() => handleDelete(id)} className="text-red-600">Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <div className="mt-8 overflow-x-auto">
+          <table className="w-full text-sm text-left rounded-xl overflow-hidden">
+            <thead className="bg-gray-700 text-gray-300">
+              <tr>
+                <th className="p-3">Long URL</th>
+                <th className="p-3">Short URL</th>
+                <th className="p-3 text-center">Clicks</th>
+                <th className="p-3 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {urls.map(({ id, long_url, short_id, click_count }) => (
+                <tr key={id} className="border-t border-gray-700 hover:bg-gray-700/30">
+                  <td className="p-3 break-all text-blue-300">{long_url}</td>
+                  <td className="p-3">
+                    <a
+                      href={`http://localhost:5001/${short_id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-400 underline"
+                    >
+                      {short_id}
+                    </a>
+                  </td>
+                  <td className="p-3 text-center font-mono">{click_count}</td>
+                  <td className="p-3 text-center space-x-2">
+                    <button
+                      onClick={() => handleEdit(id, long_url)}
+                      className="text-yellow-400 hover:underline"
+                    >Edit</button>
+                    <button
+                      onClick={() => handleDelete(id)}
+                      className="text-red-500 hover:underline"
+                    >Delete</button>
+                  </td>
+                </tr>
+              ))}
+              {urls.length === 0 && (
+                <tr>
+                  <td colSpan="4" className="text-center p-4 text-gray-400">No URLs yet</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
