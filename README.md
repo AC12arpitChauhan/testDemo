@@ -100,9 +100,7 @@ plugins: [],
 #### In `src/index.css`:
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
 
 ### 🔌 Replace `App.jsx` with provided code
