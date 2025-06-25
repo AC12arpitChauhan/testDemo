@@ -81,20 +81,23 @@ npm create vite@latest
 # Choose React + JavaScript template
 cd your-project-name
 npm install
-npm install axios tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install tailwindcss @tailwindcss/vite
 ```
 
 ### 🧩 Tailwind Configuration
 
-#### In `tailwind.config.js`:
+#### In `vite.config.ts`:
 
 ```js
-content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-theme: {
-  extend: {},
-},
-plugins: [],
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+
 ```
 
 #### In `src/index.css`:
@@ -135,8 +138,8 @@ Visit: **[http://localhost:5173](http://localhost:5173)** (or whatever port Vite
   - .env
 - frontend/
   - src/App.jsx
-  - tailwind.config.js
-  - index.css
+  - src/index.css
+  - vite.config.js
 ```
 
 ---
